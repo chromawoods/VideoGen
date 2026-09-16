@@ -13,7 +13,6 @@ interface StudioCanvasProps {
   isGenerating: boolean
   generationStage: string
   progress: number
-  apiKey?: string
   onError?: (msg: string) => void
 }
 
@@ -26,7 +25,6 @@ export function StudioCanvas({
   isGenerating,
   generationStage,
   progress,
-  apiKey,
   onError,
 }: StudioCanvasProps) {
   const [isDownloading, setIsDownloading] = useState(false)
@@ -36,7 +34,7 @@ export function StudioCanvas({
     setIsDownloading(true)
 
     try {
-      await downloadVideo(generatedVideoUrl, 'veo_generated_video.mp4', apiKey)
+      await downloadVideo(generatedVideoUrl, 'veo_generated_video.mp4')
     } catch (err: unknown) {
       console.error('Download error:', err)
       onError?.(getErrorMessage(err, 'Failed to download video file.'))

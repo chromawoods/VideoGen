@@ -6,10 +6,7 @@
 /**
  * Retrieve API key from environment variables or explicit config.
  */
-export function getApiKey(explicitKey?: string): string {
-  if (explicitKey && explicitKey.trim() !== '') {
-    return explicitKey.trim()
-  }
+export function getApiKey(): string {
   if (typeof process !== 'undefined' && process.env?.VIDEO_GEN_API_KEY) {
     return process.env.VIDEO_GEN_API_KEY.trim()
   }
@@ -25,15 +22,12 @@ export function getApiKey(explicitKey?: string): string {
 /**
  * Builds an authenticated media URL with API key and alt=media query params.
  */
-export function buildAuthenticatedMediaUrl(
-  url: string,
-  apiKey?: string
-): string {
+export function buildAuthenticatedMediaUrl(url: string): string {
   if (url.startsWith('blob:') || url.startsWith('data:')) {
     return url
   }
 
-  const resolvedApiKey = getApiKey(apiKey)
+  const resolvedApiKey = getApiKey()
   try {
     const parsed = new URL(url)
     if (resolvedApiKey && !parsed.searchParams.has('key')) {
@@ -55,10 +49,7 @@ export function buildAuthenticatedMediaUrl(
 /**
  * Fetches media bytes as a Blob with optional authentication.
  */
-export async function fetchMediaBlob(
-  url: string,
-  apiKey?: string
-): Promise<Blob> {
+export async function fetchMediaBlob(url: string): Promise<Blob> {
   if (url.startsWith('blob:') || url.startsWith('data:')) {
     const res = await fetch(url)
     if (!res.ok) {
@@ -69,8 +60,8 @@ export async function fetchMediaBlob(
     return res.blob()
   }
 
-  const resolvedApiKey = getApiKey(apiKey)
-  const authenticatedUrl = buildAuthenticatedMediaUrl(url, resolvedApiKey)
+  const resolvedApiKey = getApiKey()
+  const authenticatedUrl = buildAuthenticatedMediaUrl(url)
 
   const response = await fetch(authenticatedUrl, {
     headers: resolvedApiKey ? { 'x-goog-api-key': resolvedApiKey } : undefined,
@@ -88,11 +79,8 @@ export async function fetchMediaBlob(
 /**
  * Fetches media bytes and converts them to a local Blob URL.
  */
-export async function fetchMediaBlobUrl(
-  url: string,
-  apiKey?: string
-): Promise<string> {
-  const blob = await fetchMediaBlob(url, apiKey)
+export async function fetchMediaBlobUrl(url: string): Promise<string> {
+  const blob = await fetchMediaBlob(url)
   return URL.createObjectURL(blob)
 }
 
@@ -192,8 +180,7 @@ export async function downloadBlob(
  */
 export async function downloadVideo(
   url: string,
-  filename = 'veo_generated_video.mp4',
-  apiKey?: string
+  filename = 'veo_generated_video.mp4'
 ): Promise<void> {
   if (!url) return
 
@@ -204,6 +191,6 @@ export async function downloadVideo(
   }
 
   // Remote URL: fetch blob with authentication and download with prompt cleanup
-  const blob = await fetchMediaBlob(url, apiKey)
+  const blob = await fetchMediaBlob(url)
   await downloadBlob(blob, filename)
 }

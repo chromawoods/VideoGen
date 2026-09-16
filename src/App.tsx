@@ -75,7 +75,6 @@ export default function App() {
       prompt,
       image: selectedFile || selectedImage || '',
       aspectRatio,
-      apiKey,
     })
   }
 
@@ -153,7 +152,6 @@ export default function App() {
               isGenerating={isGenerating}
               generationStage={generationStage}
               progress={progress}
-              apiKey={apiKey}
               onError={setErrorMessage}
             />
           </div>

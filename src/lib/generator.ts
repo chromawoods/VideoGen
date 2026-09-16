@@ -21,18 +21,16 @@ export const AVAILABLE_MODELS = [
   'veo-3.1-fast-generate-preview',
 ] as const
 
-export type ImageToVideoConfig = {
-  input: {
-    model: (typeof AVAILABLE_MODELS)[number]
-    prompt: string
-    image: string | File | Blob
-  }
-  output: {
+export type ImageToVideoProps = {
+  model: (typeof AVAILABLE_MODELS)[number]
+  prompt: string
+  image: string | File | Blob
+  config: {
     durationSeconds: 4
     resolution: '720p'
     aspectRatio: '16:9' | '9:16'
+    numberOfVideos: 1
   }
-  apiKey?: string
 }
 
 export type GenerationState =
@@ -58,8 +56,8 @@ export type ProgressCallback = (progress: GenerationProgress) => void
 /**
  * Creates or gets a GoogleGenAI client with the specified or resolved API key.
  */
-export function getGenAIClient(apiKey?: string): GoogleGenAI {
-  const key = getApiKey(apiKey)
+export function getGenAIClient(): GoogleGenAI {
+  const key = getApiKey()
   return new GoogleGenAI({ apiKey: key || '' })
 }
 
@@ -158,19 +156,21 @@ export type GenerateVideosOperation = Awaited<
 >
 
 export async function generateVideoFromImage(
-  config: ImageToVideoConfig,
+  props: ImageToVideoProps,
   onProgress?: ProgressCallback
 ): Promise<{ videoUrl: string; operation: GenerateVideosOperation }> {
   try {
+    const { model, prompt, image, config } = props
+
     // 1. Validation
-    if (!config.input.image) {
+    if (!image) {
       throw new Error('Please select or upload an image before generating.')
     }
-    if (!config.input.prompt || config.input.prompt.trim() === '') {
+    if (!prompt || prompt.trim() === '') {
       throw new Error('Please provide a scene description prompt.')
     }
 
-    const apiKey = getApiKey(config.apiKey)
+    const apiKey = getApiKey()
     if (!apiKey) {
       throw new Error(
         'API key is required. Please ensure the VIDEO_GEN_API_KEY environment variable is set.'
@@ -183,31 +183,26 @@ export async function generateVideoFromImage(
       progress: 10,
     })
 
-    const { imageBytes, mimeType } = await resolveImageInput(config.input.image)
-    const client = getGenAIClient(apiKey)
+    const { imageBytes, mimeType } = await resolveImageInput(image)
+    const client = getGenAIClient()
 
     onProgress?.({
       state: 'submitting',
-      stage: `Connecting to Google GenAI (${config.input.model})...`,
+      stage: `Connecting to Google GenAI (${model})...`,
       progress: 25,
     })
 
     // 2. Submit generation operation
     let operation = await client.models.generateVideos({
-      model: config.input.model,
+      model,
       source: {
-        prompt: config.input.prompt.trim(),
+        prompt: prompt.trim(),
         image: {
           imageBytes,
           mimeType,
         },
       },
-      config: {
-        durationSeconds: config.output.durationSeconds,
-        resolution: config.output.resolution,
-        aspectRatio: config.output.aspectRatio,
-        numberOfVideos: 1,
-      },
+      config,
     })
 
     onProgress?.({
@@ -277,13 +272,13 @@ export async function generateVideoFromImage(
     } else if (generatedVideo.uri) {
       const uri = generatedVideo.uri
       try {
-        videoUrl = await fetchMediaBlobUrl(uri, apiKey)
+        videoUrl = await fetchMediaBlobUrl(uri)
       } catch (fetchErr: unknown) {
         console.warn(
           'Direct media download failed, falling back to authenticated uri:',
           fetchErr
         )
-        videoUrl = buildAuthenticatedMediaUrl(uri, apiKey)
+        videoUrl = buildAuthenticatedMediaUrl(uri)
       }
     }
 

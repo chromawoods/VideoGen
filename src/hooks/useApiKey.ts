@@ -14,7 +14,7 @@ export function useApiKey() {
   const envApiKey = getApiKey()
   const hasEnvKey = Boolean(envApiKey)
   const isKeyAvailable = Boolean(hasEnvKey || apiKey.trim())
-  const resolvedApiKey = getApiKey(apiKey)
+  const resolvedApiKey = getApiKey()
 
   const handleApiKeyChange = (val: string) => {
     setApiKey(val)

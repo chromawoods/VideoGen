@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import {
   generateVideoFromImage,
-  ImageToVideoConfig,
+  ImageToVideoProps,
   GenerationState,
   AVAILABLE_MODELS,
   getApiKey,
@@ -13,7 +13,6 @@ export interface GenerateVideoParams {
   prompt: string
   image: string | File | Blob
   aspectRatio: '16:9' | '9:16'
-  apiKey?: string
 }
 
 export function useVideoGeneration() {
@@ -46,7 +45,6 @@ export function useVideoGeneration() {
     prompt,
     image,
     aspectRatio,
-    apiKey,
   }: GenerateVideoParams): Promise<boolean> => {
     if (isGenerating) return false
     setErrorMessage(null)
@@ -66,7 +64,7 @@ export function useVideoGeneration() {
       return false
     }
 
-    const resolvedApiKey = getApiKey(apiKey)
+    const resolvedApiKey = getApiKey()
     if (!resolvedApiKey) {
       setErrorMessage(
         'API key is required. Please ensure the VIDEO_GEN_API_KEY environment variable is set or configure one in the header.'
@@ -80,18 +78,16 @@ export function useVideoGeneration() {
     setGeneratedVideoUrl(null)
 
     try {
-      const config: ImageToVideoConfig = {
-        input: {
-          model,
-          prompt: prompt.trim(),
-          image,
-        },
-        output: {
+      const config: ImageToVideoProps = {
+        model,
+        prompt: prompt.trim(),
+        image,
+        config: {
           durationSeconds: 4,
           resolution: '720p',
           aspectRatio,
+          numberOfVideos: 1,
         },
-        apiKey: resolvedApiKey,
       }
 
       const result = await generateVideoFromImage(config, (progressUpdate) => {
