@@ -8,7 +8,6 @@ import { ErrorAlert } from './components/UI/ErrorAlert'
 import { ImageDropzone } from './components/Studio/ImageDropzone'
 import { GenerationControls } from './components/Studio/GenerationControls'
 import { StudioCanvas } from './components/Studio/StudioCanvas'
-import { CommandsGuide } from './components/CommandsGuide/CommandsGuide'
 
 export default function App() {
   const [prompt, setPrompt] = useState('')
@@ -136,12 +135,7 @@ export default function App() {
             />
           </div>
         </div>
-
-        {/* Quick Start Commands Guide */}
-        <CommandsGuide />
       </main>
-
-      {/* Footer */}
       <Footer />
     </div>
   )
