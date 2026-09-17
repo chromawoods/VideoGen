@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Download, RefreshCw, Sparkles } from 'lucide-react'
 import { cn, getErrorMessage } from '../../lib/utils'
 import { downloadVideo } from '../../lib/media'
-import { PlaceholderPlayhead } from './PlaceholderPlayhead'
 
 interface StudioCanvasProps {
   generatedVideoUrl: string | null
@@ -48,9 +47,6 @@ export function StudioCanvas({
       {/* Studio Canvas Window Header */}
       <div className="px-4 py-3 bg-studio-panel/90 border-b border-white/10 flex items-center justify-between text-xs">
         <div className="flex items-center space-x-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block" />
-          <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block" />
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block" />
           <span className="ml-2 font-mono text-slate-400">
             {generatedVideoUrl
               ? 'veo_output.mp4'
@@ -183,26 +179,23 @@ export function StudioCanvas({
 
               <div className="space-y-1.5">
                 <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
-                  Veo Video Studio
+                  Video Preview
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-300 px-2">
-                  Select or drag-and-drop a source image and enter a motion
-                  prompt to synthesize video.
+                  Your video will appear here. You will be able to download it
+                  using the "Download" button in the top-right corner.
                 </p>
               </div>
 
               <div className="flex flex-wrap justify-center items-center gap-2 pt-2 text-[11px] font-mono text-slate-400">
                 <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
-                  Target: {aspectRatio}
+                  Ratio: {aspectRatio}
                 </span>
                 <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
                   Model: {model}
                 </span>
               </div>
             </div>
-
-            {/* Isolated GPU-Accelerated Playhead Overlay */}
-            <PlaceholderPlayhead />
           </div>
         )}
       </div>

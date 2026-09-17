@@ -65,4 +65,49 @@ describe('useVideoGeneration', () => {
       expect.any(Function)
     )
   })
+
+  it('passes fps to generateVideoFromImage config', async () => {
+    const { result } = renderHook(() => useVideoGeneration())
+
+    await act(async () => {
+      await result.current.generateVideo({
+        model: 'veo-3.1-lite-generate-preview',
+        prompt: 'A test prompt',
+        image: 'data:image/png;base64,mock',
+        aspectRatio: '16:9',
+        fps: 60,
+      })
+    })
+
+    expect(generator.generateVideoFromImage).toHaveBeenCalledWith(
+      expect.objectContaining({
+        config: expect.objectContaining({
+          fps: 60,
+        }),
+      }),
+      expect.any(Function)
+    )
+  })
+
+  it('defaults fps to 24 if not provided', async () => {
+    const { result } = renderHook(() => useVideoGeneration())
+
+    await act(async () => {
+      await result.current.generateVideo({
+        model: 'veo-3.1-lite-generate-preview',
+        prompt: 'A test prompt',
+        image: 'data:image/png;base64,mock',
+        aspectRatio: '16:9',
+      })
+    })
+
+    expect(generator.generateVideoFromImage).toHaveBeenCalledWith(
+      expect.objectContaining({
+        config: expect.objectContaining({
+          fps: 24,
+        }),
+      }),
+      expect.any(Function)
+    )
+  })
 })

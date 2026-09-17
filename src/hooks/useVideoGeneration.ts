@@ -15,6 +15,7 @@ export interface GenerateVideoParams {
   image: string | File | Blob
   aspectRatio: '16:9' | '9:16'
   durationSeconds?: VideoConfig['durationSeconds']
+  fps?: VideoConfig['fps']
 }
 
 export function useVideoGeneration() {
@@ -48,6 +49,7 @@ export function useVideoGeneration() {
     image,
     aspectRatio,
     durationSeconds = 4,
+    fps = 24,
   }: GenerateVideoParams): Promise<boolean> => {
     if (isGenerating) return false
     setErrorMessage(null)
@@ -87,6 +89,7 @@ export function useVideoGeneration() {
         image,
         config: {
           durationSeconds,
+          fps,
           resolution: '720p',
           aspectRatio,
           numberOfVideos: 1,

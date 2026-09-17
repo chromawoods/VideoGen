@@ -16,6 +16,7 @@ export default function App() {
   )
   const [aspectRatio, setAspectRatio] = useState<'16:9' | '9:16'>('16:9')
   const [durationSeconds, setDurationSeconds] = useState<number>(4)
+  const [fps, setFps] = useState<number>(24)
 
   const {
     generationState,
@@ -61,6 +62,7 @@ export default function App() {
       image: selectedFile || selectedImage || '',
       aspectRatio,
       durationSeconds,
+      fps,
     })
   }
 
@@ -97,6 +99,8 @@ export default function App() {
               onAspectRatioChange={setAspectRatio}
               durationSeconds={durationSeconds}
               onDurationSecondsChange={setDurationSeconds}
+              fps={fps}
+              onFpsChange={setFps}
               prompt={prompt}
               onPromptChange={setPrompt}
               isGenerating={isGenerating}
