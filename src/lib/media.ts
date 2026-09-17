@@ -4,19 +4,13 @@
  */
 
 /**
- * Retrieve API key from environment variables or explicit config.
+ * Retrieve API key from environment variable.
  */
 export function getApiKey(): string {
   if (typeof process !== 'undefined' && process.env?.VIDEO_GEN_API_KEY) {
     return process.env.VIDEO_GEN_API_KEY.trim()
   }
-  if (
-    typeof import.meta !== 'undefined' &&
-    import.meta.env?.VIDEO_GEN_API_KEY
-  ) {
-    return import.meta.env.VIDEO_GEN_API_KEY.trim()
-  }
-  return ''
+  throw new Error('VIDEO_GEN_API_KEY environment variable is not set.')
 }
 
 /**
