@@ -1,8 +1,4 @@
-import {
-  GenerateVideosConfig,
-  GenerateVideosParameters,
-  GoogleGenAI,
-} from '@google/genai'
+import { GenerateVideosConfig, GoogleGenAI } from '@google/genai'
 import {
   getApiKey,
   buildAuthenticatedMediaUrl,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Download, RefreshCw, Sparkles } from 'lucide-react'
 import { cn, getErrorMessage } from '../../lib/utils'
 import { downloadVideo } from '../../lib/media'
