@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { AVAILABLE_MODELS } from './lib/generator'
-import { useApiKey } from './hooks/useApiKey'
 import { useImageUpload } from './hooks/useImageUpload'
 import { useVideoGeneration } from './hooks/useVideoGeneration'
 import { Header } from './components/Layout/Header'
@@ -17,16 +16,6 @@ export default function App() {
     AVAILABLE_MODELS[0]
   )
   const [aspectRatio, setAspectRatio] = useState<'16:9' | '9:16'>('16:9')
-
-  // Domain Hooks
-  const {
-    apiKey,
-    hasEnvKey,
-    isKeyAvailable,
-    showApiKeyInput,
-    setShowApiKeyInput,
-    handleApiKeyChange,
-  } = useApiKey()
 
   const {
     generationState,
@@ -66,10 +55,6 @@ export default function App() {
   }
 
   const handleGenerate = async () => {
-    if (!isKeyAvailable) {
-      setShowApiKeyInput(true)
-    }
-
     await generateVideo({
       model,
       prompt,
@@ -93,16 +78,7 @@ export default function App() {
         />
       </div>
 
-      {/* Top Navigation Bar & API Key Drawer */}
-      <Header
-        apiKey={apiKey}
-        hasEnvKey={hasEnvKey}
-        isKeyAvailable={isKeyAvailable}
-        showApiKeyInput={showApiKeyInput}
-        onToggleApiKeyInput={() => setShowApiKeyInput(!showApiKeyInput)}
-        onApiKeyChange={handleApiKeyChange}
-        onCloseApiKeyInput={() => setShowApiKeyInput(false)}
-      />
+      <Header />
 
       {/* Main Studio Content Area */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-12">

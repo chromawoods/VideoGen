@@ -1,27 +1,6 @@
-import React from 'react'
-import { Video, Key } from 'lucide-react'
-import { cn } from '../../lib/utils'
-import { ApiKeyDrawer } from './ApiKeyDrawer'
+import { Video } from 'lucide-react'
 
-interface HeaderProps {
-  apiKey: string
-  hasEnvKey: boolean
-  isKeyAvailable: boolean
-  showApiKeyInput: boolean
-  onToggleApiKeyInput: () => void
-  onApiKeyChange: (val: string) => void
-  onCloseApiKeyInput: () => void
-}
-
-export function Header({
-  apiKey,
-  hasEnvKey,
-  isKeyAvailable,
-  showApiKeyInput,
-  onToggleApiKeyInput,
-  onApiKeyChange,
-  onCloseApiKeyInput,
-}: HeaderProps) {
+export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#07090e]/80 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -42,38 +21,7 @@ export function Header({
             </div>
           </div>
         </div>
-
-        <div className="flex items-center space-x-3">
-          <button
-            onClick={onToggleApiKeyInput}
-            className={cn(
-              'flex items-center space-x-1.5 text-xs px-3 py-1.5 rounded-lg border transition-all cursor-pointer',
-              isKeyAvailable
-                ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/20'
-                : 'bg-amber-500/10 text-amber-300 border-amber-500/30 hover:bg-amber-500/20'
-            )}
-            title="Configure Gemini API Key"
-          >
-            <Key className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">
-              {hasEnvKey
-                ? 'VIDEO_GEN_API_KEY Active'
-                : apiKey
-                  ? 'API Key Set'
-                  : 'Set API Key'}
-            </span>
-          </button>
-        </div>
       </div>
-
-      {showApiKeyInput && (
-        <ApiKeyDrawer
-          apiKey={apiKey}
-          hasEnvKey={hasEnvKey}
-          onApiKeyChange={onApiKeyChange}
-          onClose={onCloseApiKeyInput}
-        />
-      )}
     </header>
   )
 }
