@@ -7,6 +7,8 @@ interface StudioCanvasProps {
   generatedVideoUrl: string | null
   selectedImage: string | null
   aspectRatio: '16:9' | '9:16'
+  durationSeconds: number
+  fps: number
   model: string
   prompt: string
   isGenerating: boolean
@@ -19,6 +21,8 @@ export function StudioCanvas({
   generatedVideoUrl,
   selectedImage,
   aspectRatio,
+  durationSeconds,
+  fps,
   model,
   prompt,
   isGenerating,
@@ -133,7 +137,7 @@ export function StudioCanvas({
                   />
                 </div>
                 <span className="text-[11px] font-mono text-slate-400">
-                  {progress}% • 720p • 4.0s
+                  {progress}%
                 </span>
               </div>
             ) : (
@@ -151,7 +155,7 @@ export function StudioCanvas({
                       : 'Enter motion prompt and click generate to synthesize video'}
                   </p>
                   <p className="text-[10px] text-slate-400 font-mono">
-                    Aspect Ratio: {aspectRatio} • 4 Seconds • Veo Model
+                    Ratio: {aspectRatio} • {durationSeconds} Seconds • {fps} FPS
                   </p>
                 </div>
               </div>
@@ -184,10 +188,18 @@ export function StudioCanvas({
 
               <div className="flex flex-wrap justify-center items-center gap-2 pt-2 text-[11px] font-mono text-slate-400">
                 <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
+                  Model: {model}
+                </span>
+              </div>
+              <div className="flex flex-wrap justify-center items-center gap-2 pt-2 text-[11px] font-mono text-slate-400">
+                <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
                   Ratio: {aspectRatio}
                 </span>
                 <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
-                  Model: {model}
+                  Duration: {durationSeconds}
+                </span>
+                <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
+                  FPS: {fps}
                 </span>
               </div>
             </div>

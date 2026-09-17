@@ -130,6 +130,8 @@ export default function App() {
               generatedVideoUrl={generatedVideoUrl}
               selectedImage={selectedImage}
               aspectRatio={aspectRatio}
+              durationSeconds={durationSeconds}
+              fps={fps}
               model={model}
               prompt={prompt}
               isGenerating={isGenerating}
