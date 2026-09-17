@@ -80,7 +80,7 @@ export function GenerationControls({
               onModelChange(e.target.value as (typeof AVAILABLE_MODELS)[number])
             }
             disabled={isGenerating}
-            className="w-full text-xs bg-[#0f1422] border border-white/10 rounded-lg px-2.5 py-2 text-slate-200 focus:outline-none focus:border-purple-500 transition-colors disabled:opacity-50"
+            className="w-full text-xs bg-studio-input border border-white/10 rounded-lg px-2.5 py-2 text-slate-200 focus:outline-none focus:border-purple-500 transition-colors disabled:opacity-50"
           >
             {AVAILABLE_MODELS.map((m) => (
               <option key={m} value={m}>
@@ -95,7 +95,7 @@ export function GenerationControls({
             <Sliders className="w-3.5 h-3.5 text-slate-400" />
             <span>Ratio</span>
           </label>
-          <div className="flex rounded-lg border border-white/10 bg-[#0f1422] p-0.5">
+          <div className="flex rounded-lg border border-white/10 bg-studio-input p-0.5">
             {(['16:9', '9:16'] as const).map((ratio) => (
               <button
                 key={ratio}
@@ -142,7 +142,7 @@ export function GenerationControls({
           }
           disabled={isGenerating}
           aria-label="Duration (seconds)"
-          className="w-full h-1.5 bg-[#0f1422] rounded-lg appearance-none cursor-pointer accent-purple-500 disabled:opacity-50"
+          className="w-full h-1.5 bg-studio-input rounded-lg appearance-none cursor-pointer accent-purple-500 disabled:opacity-50"
         />
         <div className="flex justify-between text-[10px] text-slate-500 font-mono">
           <span>1s</span>
@@ -164,7 +164,7 @@ export function GenerationControls({
           onChange={(e) => onPromptChange(e.target.value)}
           disabled={isGenerating}
           rows={3}
-          className="w-full text-xs sm:text-sm bg-[#0a0d16] border border-white/10 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-purple-500/80 focus:ring-1 focus:ring-purple-500/50 resize-none transition-all placeholder:text-slate-600 font-sans disabled:opacity-50"
+          className="w-full text-xs sm:text-sm bg-studio-panel border border-white/10 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-purple-500/80 focus:ring-1 focus:ring-purple-500/50 resize-none transition-all placeholder:text-slate-600 font-sans disabled:opacity-50"
           placeholder="e.g., Cinematic slow motion, gentle camera push-in, sunlight reflecting gracefully..."
         />
       </div>

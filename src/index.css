@@ -63,7 +63,7 @@
 
 /* Glassmorphic card styling */
 .glass-panel {
-  background: rgba(15, 20, 32, 0.7);
+  background: theme('colors.studio.glass / 70%');
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -74,10 +74,10 @@
 }
 
 .glass-panel-hover:hover {
-  background: rgba(20, 26, 42, 0.85);
-  border-color: rgba(168, 85, 247, 0.3);
+  background: theme('colors.studio.glassHover / 85%');
+  border-color: theme('colors.purple.500 / 30%');
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px -10px rgba(168, 85, 247, 0.15);
+  box-shadow: 0 12px 30px -10px theme('colors.purple.500 / 15%');
 }
 
 /* Custom scrollbar */
@@ -85,12 +85,12 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #090b10;
+  background: theme('colors.studio.root');
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: theme('colors.slate.800');
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: theme('colors.slate.700');
 }

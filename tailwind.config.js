@@ -32,6 +32,23 @@ export default {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        studio: {
+          DEFAULT: '#07090e',
+          base: '#07090e',
+          abyss: '#05070c',
+          root: '#090b10',
+          logo: '#090b12',
+          panel: '#0a0d16',
+          badge: '#0d111d',
+          input: '#0f1422',
+          glass: '#0f1420',
+          glassHover: '#141a2a',
+          gradient: {
+            from: '#121626',
+            via: '#0b0e1a',
+            to: '#151327',
+          },
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

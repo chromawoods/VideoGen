@@ -65,7 +65,7 @@ export default function App() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#07090e] bg-grid-pattern text-slate-100 flex flex-col justify-between selection:bg-purple-600/40">
+    <div className="relative min-h-screen bg-studio-base bg-grid-pattern text-slate-100 flex flex-col justify-between selection:bg-purple-600/40">
       {/* Dynamic Background Glows */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
         <div className="absolute -top-40 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-glow-pulse" />

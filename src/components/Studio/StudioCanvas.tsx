@@ -46,7 +46,7 @@ export function StudioCanvas({
   return (
     <div className="glass-panel rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col">
       {/* Studio Canvas Window Header */}
-      <div className="px-4 py-3 bg-[#0a0d16]/90 border-b border-white/10 flex items-center justify-between text-xs">
+      <div className="px-4 py-3 bg-studio-panel/90 border-b border-white/10 flex items-center justify-between text-xs">
         <div className="flex items-center space-x-2">
           <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block" />
           <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block" />
@@ -70,7 +70,7 @@ export function StudioCanvas({
       </div>
 
       {/* Dynamic Viewport */}
-      <div className="relative bg-[#05070c] flex items-center justify-center p-6 min-h-[420px] overflow-hidden">
+      <div className="relative bg-studio-abyss flex items-center justify-center p-6 min-h-[420px] overflow-hidden">
         {generatedVideoUrl ? (
           /* Generated Video Output */
           <div
@@ -120,7 +120,7 @@ export function StudioCanvas({
 
             {/* Overlay during generation */}
             {isGenerating ? (
-              <div className="absolute inset-0 bg-[#07090e]/85 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center space-y-4 animate-in fade-in">
+              <div className="absolute inset-0 bg-studio-base/85 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center space-y-4 animate-in fade-in">
                 <div className="w-16 h-16 rounded-2xl bg-purple-600/20 border border-purple-500/40 flex items-center justify-center text-purple-400">
                   <RefreshCw className="w-8 h-8 animate-spin" />
                 </div>
@@ -167,7 +167,7 @@ export function StudioCanvas({
           /* Initial Placeholder Canvas */
           <div
             className={cn(
-              'relative rounded-xl overflow-hidden border border-white/15 shadow-2xl transition-all duration-500 flex flex-col items-center justify-center text-center p-8 bg-gradient-to-br from-[#121626] via-[#0b0e1a] to-[#151327]',
+              'relative rounded-xl overflow-hidden border border-white/15 shadow-2xl transition-all duration-500 flex flex-col items-center justify-center text-center p-8 bg-gradient-to-br from-studio-gradient-from via-studio-gradient-via to-studio-gradient-to',
               aspectRatio === '16:9' && 'w-full aspect-video max-h-[360px]',
               aspectRatio === '9:16' && 'w-64 aspect-[9/16]'
             )}
@@ -176,7 +176,7 @@ export function StudioCanvas({
 
             <div className="relative z-10 space-y-4 max-w-md">
               <div className="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-cyan-400 p-0.5 shadow-xl shadow-purple-600/30 animate-float">
-                <div className="w-full h-full bg-[#0d111d] rounded-[14px] flex items-center justify-center">
+                <div className="w-full h-full bg-studio-badge rounded-[14px] flex items-center justify-center">
                   <Sparkles className="w-8 h-8 text-cyan-300" />
                 </div>
               </div>

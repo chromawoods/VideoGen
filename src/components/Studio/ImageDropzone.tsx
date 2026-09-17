@@ -75,7 +75,7 @@ export function ImageDropzone({
             'group relative rounded-xl border-2 border-dashed p-5 text-center cursor-pointer transition-all flex flex-col items-center justify-center space-y-2.5',
             isDragging
               ? 'border-purple-500 bg-purple-500/10 scale-[1.01]'
-              : 'border-white/15 bg-[#0a0d16]/80 hover:border-purple-500/50 hover:bg-white/5'
+              : 'border-white/15 bg-studio-panel/80 hover:border-purple-500/50 hover:bg-white/5'
           )}
         >
           <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
@@ -95,7 +95,7 @@ export function ImageDropzone({
         </div>
       ) : (
         /* Selected Image Preview & File Meta */
-        <div className="relative rounded-xl border border-white/10 bg-[#0a0d16] p-3 flex items-center space-x-3.5">
+        <div className="relative rounded-xl border border-white/10 bg-studio-panel p-3 flex items-center space-x-3.5">
           <img
             src={selectedImage}
             alt="Source preview"
