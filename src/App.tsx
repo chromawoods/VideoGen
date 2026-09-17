@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AVAILABLE_MODELS } from './lib/generator'
+import { AVAILABLE_MODELS, VideoConfig } from './lib/generator'
 import { useImageUpload } from './hooks/useImageUpload'
 import { useVideoGeneration } from './hooks/useVideoGeneration'
 import { Header } from './components/Layout/Header'
@@ -15,6 +15,8 @@ export default function App() {
     AVAILABLE_MODELS[0]
   )
   const [aspectRatio, setAspectRatio] = useState<'16:9' | '9:16'>('16:9')
+  const [resolution, setResolution] =
+    useState<NonNullable<VideoConfig['resolution']>>('720p')
   const [durationSeconds, setDurationSeconds] = useState<number>(4)
   const [fps, setFps] = useState<number>(24)
 
@@ -61,6 +63,7 @@ export default function App() {
       prompt,
       image: selectedFile || selectedImage || '',
       aspectRatio,
+      resolution,
       durationSeconds,
       fps,
     })
@@ -97,6 +100,8 @@ export default function App() {
               onModelChange={setModel}
               aspectRatio={aspectRatio}
               onAspectRatioChange={setAspectRatio}
+              resolution={resolution}
+              onResolutionChange={setResolution}
               durationSeconds={durationSeconds}
               onDurationSecondsChange={setDurationSeconds}
               fps={fps}
@@ -130,6 +135,7 @@ export default function App() {
               generatedVideoUrl={generatedVideoUrl}
               selectedImage={selectedImage}
               aspectRatio={aspectRatio}
+              resolution={resolution}
               durationSeconds={durationSeconds}
               fps={fps}
               model={model}

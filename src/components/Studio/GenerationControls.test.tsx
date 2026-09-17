@@ -9,6 +9,8 @@ describe('GenerationControls', () => {
     onModelChange: vi.fn(),
     aspectRatio: '16:9' as const,
     onAspectRatioChange: vi.fn(),
+    resolution: '720p',
+    onResolutionChange: vi.fn(),
     durationSeconds: 4,
     onDurationSecondsChange: vi.fn(),
     fps: 24,
@@ -21,6 +23,44 @@ describe('GenerationControls', () => {
     progress: 0,
     onGenerate: vi.fn(),
   }
+
+  it('renders resolution buttons with label and default active state', () => {
+    render(<GenerationControls {...defaultProps} />)
+
+    const label = screen.getByText('Resolution')
+    expect(label).toBeInTheDocument()
+
+    const res720Btn = screen.getByRole('button', { name: '720p' })
+    const res1080Btn = screen.getByRole('button', { name: '1080p' })
+    expect(res720Btn).toBeInTheDocument()
+    expect(res1080Btn).toBeInTheDocument()
+    expect(res720Btn).toHaveClass('bg-purple-600')
+    expect(res1080Btn).not.toHaveClass('bg-purple-600')
+  })
+
+  it('calls onResolutionChange when resolution button is clicked', () => {
+    const onResolutionChange = vi.fn()
+    render(
+      <GenerationControls
+        {...defaultProps}
+        onResolutionChange={onResolutionChange}
+      />
+    )
+
+    const res1080Btn = screen.getByRole('button', { name: '1080p' })
+    fireEvent.click(res1080Btn)
+
+    expect(onResolutionChange).toHaveBeenCalledWith('1080p')
+  })
+
+  it('disables the resolution buttons when isGenerating is true', () => {
+    render(<GenerationControls {...defaultProps} isGenerating={true} />)
+
+    const res720Btn = screen.getByRole('button', { name: '720p' })
+    const res1080Btn = screen.getByRole('button', { name: '1080p' })
+    expect(res720Btn).toBeDisabled()
+    expect(res1080Btn).toBeDisabled()
+  })
 
   it('renders the duration slider with label and correct range attributes', () => {
     render(<GenerationControls {...defaultProps} />)

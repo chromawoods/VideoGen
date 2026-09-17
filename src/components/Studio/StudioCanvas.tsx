@@ -7,6 +7,7 @@ interface StudioCanvasProps {
   generatedVideoUrl: string | null
   selectedImage: string | null
   aspectRatio: '16:9' | '9:16'
+  resolution: '720p' | '1080p'
   durationSeconds: number
   fps: number
   model: string
@@ -21,6 +22,7 @@ export function StudioCanvas({
   generatedVideoUrl,
   selectedImage,
   aspectRatio,
+  resolution,
   durationSeconds,
   fps,
   model,
@@ -196,7 +198,10 @@ export function StudioCanvas({
                   Ratio: {aspectRatio}
                 </span>
                 <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
-                  Duration: {durationSeconds}
+                  Resolution: {resolution}
+                </span>
+                <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
+                  Duration: {durationSeconds}s
                 </span>
                 <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
                   FPS: {fps}

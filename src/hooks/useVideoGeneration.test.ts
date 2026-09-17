@@ -110,4 +110,49 @@ describe('useVideoGeneration', () => {
       expect.any(Function)
     )
   })
+
+  it('passes resolution to generateVideoFromImage config', async () => {
+    const { result } = renderHook(() => useVideoGeneration())
+
+    await act(async () => {
+      await result.current.generateVideo({
+        model: 'veo-3.1-lite-generate-preview',
+        prompt: 'A test prompt',
+        image: 'data:image/png;base64,mock',
+        aspectRatio: '16:9',
+        resolution: '1080p',
+      })
+    })
+
+    expect(generator.generateVideoFromImage).toHaveBeenCalledWith(
+      expect.objectContaining({
+        config: expect.objectContaining({
+          resolution: '1080p',
+        }),
+      }),
+      expect.any(Function)
+    )
+  })
+
+  it('defaults resolution to 720p if not provided', async () => {
+    const { result } = renderHook(() => useVideoGeneration())
+
+    await act(async () => {
+      await result.current.generateVideo({
+        model: 'veo-3.1-lite-generate-preview',
+        prompt: 'A test prompt',
+        image: 'data:image/png;base64,mock',
+        aspectRatio: '16:9',
+      })
+    })
+
+    expect(generator.generateVideoFromImage).toHaveBeenCalledWith(
+      expect.objectContaining({
+        config: expect.objectContaining({
+          resolution: '720p',
+        }),
+      }),
+      expect.any(Function)
+    )
+  })
 })

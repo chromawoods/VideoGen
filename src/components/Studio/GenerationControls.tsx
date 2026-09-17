@@ -8,6 +8,7 @@ import {
   Gauge,
   SlidersHorizontal,
   Proportions,
+  Tv,
   Pencil,
 } from 'lucide-react'
 import { cn } from '../../lib/utils'
@@ -22,6 +23,10 @@ interface GenerationControlsProps {
   onModelChange: (model: (typeof AVAILABLE_MODELS)[number]) => void
   aspectRatio: '16:9' | '9:16'
   onAspectRatioChange: (ratio: '16:9' | '9:16') => void
+  resolution: NonNullable<VideoConfig['resolution']>
+  onResolutionChange: (
+    resolution: NonNullable<VideoConfig['resolution']>
+  ) => void
   durationSeconds: NonNullable<VideoConfig['durationSeconds']>
   onDurationSecondsChange: (
     duration: NonNullable<VideoConfig['durationSeconds']>
@@ -43,6 +48,8 @@ export function GenerationControls({
   onModelChange,
   aspectRatio,
   onAspectRatioChange,
+  resolution,
+  onResolutionChange,
   durationSeconds,
   onDurationSecondsChange,
   fps,
@@ -73,29 +80,30 @@ export function GenerationControls({
       {/* Source Image Selector (passed as child) */}
       {children}
 
-      {/* Model & Aspect Ratio Selectors */}
-      <div className="grid grid-cols-2 gap-3">
-        <div className="space-y-1.5">
-          <label className="text-xs font-medium text-slate-400 flex items-center space-x-1">
-            <Cpu className="w-3.5 h-3.5 text-slate-400" />
-            <span>AI Model</span>
-          </label>
-          <select
-            value={model}
-            onChange={(e) =>
-              onModelChange(e.target.value as (typeof AVAILABLE_MODELS)[number])
-            }
-            disabled={isGenerating}
-            className="w-full text-xs bg-studio-input border border-white/10 rounded-lg px-2.5 py-2 text-slate-200 focus:outline-none focus:border-purple-500 transition-colors disabled:opacity-50"
-          >
-            {AVAILABLE_MODELS.map((m) => (
-              <option key={m} value={m}>
-                {m}
-              </option>
-            ))}
-          </select>
-        </div>
+      {/* AI Model Selector */}
+      <div className="space-y-1.5">
+        <label className="text-xs font-medium text-slate-400 flex items-center space-x-1">
+          <Cpu className="w-3.5 h-3.5 text-slate-400" />
+          <span>AI Model</span>
+        </label>
+        <select
+          value={model}
+          onChange={(e) =>
+            onModelChange(e.target.value as (typeof AVAILABLE_MODELS)[number])
+          }
+          disabled={isGenerating}
+          className="w-full text-xs bg-studio-input border border-white/10 rounded-lg px-2.5 py-2 text-slate-200 focus:outline-none focus:border-purple-500 transition-colors disabled:opacity-50"
+        >
+          {AVAILABLE_MODELS.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+      </div>
 
+      {/* Aspect Ratio & Resolution Selectors */}
+      <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
           <label className="text-xs font-medium text-slate-400 flex items-center space-x-1">
             <Proportions className="w-3.5 h-3.5 text-slate-400" />
@@ -116,6 +124,31 @@ export function GenerationControls({
                 )}
               >
                 {ratio}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-1.5">
+          <label className="text-xs font-medium text-slate-400 flex items-center space-x-1">
+            <Tv className="w-3.5 h-3.5 text-slate-400" />
+            <span>Resolution</span>
+          </label>
+          <div className="flex rounded-lg border border-white/10 bg-studio-input p-0.5">
+            {(['720p', '1080p'] as const).map((res) => (
+              <button
+                key={res}
+                type="button"
+                disabled={isGenerating}
+                onClick={() => onResolutionChange(res)}
+                className={cn(
+                  'flex-1 text-[11px] py-1.5 rounded-md font-medium transition-all disabled:opacity-50 cursor-pointer',
+                  resolution === res
+                    ? 'bg-purple-600 text-white shadow-sm'
+                    : 'text-slate-400 hover:text-white'
+                )}
+              >
+                {res}
               </button>
             ))}
           </div>
