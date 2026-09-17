@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Download, RefreshCw, Sparkles } from 'lucide-react'
+import { Download, Film, RefreshCw, Sparkles } from 'lucide-react'
 import { cn, getErrorMessage } from '../../lib/utils'
 import { downloadVideo } from '../../lib/media'
 
@@ -47,20 +47,18 @@ export function StudioCanvas({
       {/* Studio Canvas Window Header */}
       <div className="px-4 py-3 bg-studio-panel/90 border-b border-white/10 flex items-center justify-between text-xs">
         <div className="flex items-center space-x-2">
+          <Film className="w-5 h-5 text-purple-400" />
+          <h2 className="font-semibold text-base text-slate-100">
+            Video Preview
+          </h2>
+        </div>
+        <div className="flex items-center space-x-2 font-mono text-[11px] text-slate-400">
           <span className="ml-2 font-mono text-slate-400">
             {generatedVideoUrl
               ? 'veo_output.mp4'
               : selectedImage
                 ? 'source_input.jpg'
                 : 'studio_preview.mp4'}
-          </span>
-        </div>
-        <div className="flex items-center space-x-2 font-mono text-[11px] text-slate-400">
-          <span className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10">
-            {aspectRatio === '16:9' ? '1280x720 (720p)' : '720x1280 (720p)'}
-          </span>
-          <span className="px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
-            {model}
           </span>
         </div>
       </div>
@@ -178,9 +176,6 @@ export function StudioCanvas({
               </div>
 
               <div className="space-y-1.5">
-                <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
-                  Video Preview
-                </h3>
                 <p className="text-xs sm:text-sm text-slate-300 px-2">
                   Your video will appear here. You will be able to download it
                   using the "Download" button in the top-right corner.

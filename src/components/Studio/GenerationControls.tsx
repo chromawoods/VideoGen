@@ -1,13 +1,14 @@
 import React from 'react'
 import {
-  Film,
   Cpu,
-  Sliders,
   Sparkles,
   RefreshCw,
   CheckCircle2,
   Clock,
   Gauge,
+  SlidersHorizontal,
+  Proportions,
+  Pencil,
 } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import {
@@ -59,7 +60,7 @@ export function GenerationControls({
     <div className="glass-panel rounded-2xl p-6 space-y-5 shadow-2xl">
       <div className="flex items-center justify-between border-b border-white/5 pb-4">
         <div className="flex items-center space-x-2">
-          <Film className="w-5 h-5 text-purple-400" />
+          <SlidersHorizontal className="w-5 h-5 text-purple-400" />
           <h2 className="font-semibold text-base text-slate-100">
             Video Generation Controls
           </h2>
@@ -97,7 +98,7 @@ export function GenerationControls({
 
         <div className="space-y-1.5">
           <label className="text-xs font-medium text-slate-400 flex items-center space-x-1">
-            <Sliders className="w-3.5 h-3.5 text-slate-400" />
+            <Proportions className="w-3.5 h-3.5 text-slate-400" />
             <span>Ratio</span>
           </label>
           <div className="flex rounded-lg border border-white/10 bg-studio-input p-0.5">
@@ -194,12 +195,15 @@ export function GenerationControls({
 
       {/* Prompt Textarea */}
       <div className="space-y-1.5">
-        <label className="text-xs font-medium text-slate-400 flex items-center justify-between">
-          <span>Describe the motion & scene</span>
-          <span className="text-[10px] text-slate-500 font-mono">
+        <div className="flex items-center justify-between">
+          <label className="text-xs font-medium text-slate-400 flex items-center space-x-1">
+            <Pencil className="w-3.5 h-3.5 text-slate-400" />{' '}
+            <span>Describe the motion & scene</span>
+          </label>
+          <span className="text-xs font-mono font-medium text-purple-300">
             {prompt.length} chars
           </span>
-        </label>
+        </div>
         <textarea
           value={prompt}
           onChange={(e) => onPromptChange(e.target.value)}
