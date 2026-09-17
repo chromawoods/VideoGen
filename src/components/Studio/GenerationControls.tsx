@@ -6,15 +6,24 @@ import {
   Sparkles,
   RefreshCw,
   CheckCircle2,
+  Clock,
 } from 'lucide-react'
 import { cn } from '../../lib/utils'
-import { AVAILABLE_MODELS, GenerationState } from '../../lib/generator'
+import {
+  AVAILABLE_MODELS,
+  GenerationState,
+  VideoConfig,
+} from '../../lib/generator'
 
 interface GenerationControlsProps {
   model: (typeof AVAILABLE_MODELS)[number]
   onModelChange: (model: (typeof AVAILABLE_MODELS)[number]) => void
   aspectRatio: '16:9' | '9:16'
   onAspectRatioChange: (ratio: '16:9' | '9:16') => void
+  durationSeconds: NonNullable<VideoConfig['durationSeconds']>
+  onDurationSecondsChange: (
+    duration: NonNullable<VideoConfig['durationSeconds']>
+  ) => void
   prompt: string
   onPromptChange: (prompt: string) => void
   isGenerating: boolean
@@ -30,6 +39,8 @@ export function GenerationControls({
   onModelChange,
   aspectRatio,
   onAspectRatioChange,
+  durationSeconds,
+  onDurationSecondsChange,
   prompt,
   onPromptChange,
   isGenerating,
@@ -102,6 +113,41 @@ export function GenerationControls({
               </button>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Duration Slider */}
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between">
+          <label
+            htmlFor="duration-seconds"
+            className="text-xs font-medium text-slate-400 flex items-center space-x-1"
+          >
+            <Clock className="w-3.5 h-3.5 text-slate-400" />
+            <span>Duration</span>
+          </label>
+          <span className="text-xs font-mono font-medium text-purple-300">
+            {durationSeconds}s
+          </span>
+        </div>
+        <input
+          id="duration-seconds"
+          type="range"
+          min={1}
+          max={12}
+          step={1}
+          value={durationSeconds}
+          onChange={(e) =>
+            onDurationSecondsChange(parseInt(e.target.value, 10))
+          }
+          disabled={isGenerating}
+          aria-label="Duration (seconds)"
+          className="w-full h-1.5 bg-[#0f1422] rounded-lg appearance-none cursor-pointer accent-purple-500 disabled:opacity-50"
+        />
+        <div className="flex justify-between text-[10px] text-slate-500 font-mono">
+          <span>1s</span>
+          <span>6s</span>
+          <span>12s</span>
         </div>
       </div>
 

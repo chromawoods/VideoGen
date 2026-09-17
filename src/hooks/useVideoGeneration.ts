@@ -4,6 +4,7 @@ import {
   ImageToVideoProps,
   GenerationState,
   AVAILABLE_MODELS,
+  VideoConfig,
   getApiKey,
 } from '../lib/generator'
 import { getErrorMessage } from '../lib/utils'
@@ -13,6 +14,7 @@ export interface GenerateVideoParams {
   prompt: string
   image: string | File | Blob
   aspectRatio: '16:9' | '9:16'
+  durationSeconds?: VideoConfig['durationSeconds']
 }
 
 export function useVideoGeneration() {
@@ -45,6 +47,7 @@ export function useVideoGeneration() {
     prompt,
     image,
     aspectRatio,
+    durationSeconds = 4,
   }: GenerateVideoParams): Promise<boolean> => {
     if (isGenerating) return false
     setErrorMessage(null)
@@ -83,7 +86,7 @@ export function useVideoGeneration() {
         prompt: prompt.trim(),
         image,
         config: {
-          durationSeconds: 4,
+          durationSeconds,
           resolution: '720p',
           aspectRatio,
           numberOfVideos: 1,

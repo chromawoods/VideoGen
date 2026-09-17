@@ -25,7 +25,7 @@ export const AVAILABLE_MODELS = [
   'veo-3.1-fast-generate-preview',
 ] as const
 
-type VideoConfig = Pick<
+export type VideoConfig = Pick<
   GenerateVideosConfig,
   | 'aspectRatio'
   | 'durationSeconds'

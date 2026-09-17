@@ -16,6 +16,7 @@ export default function App() {
     AVAILABLE_MODELS[0]
   )
   const [aspectRatio, setAspectRatio] = useState<'16:9' | '9:16'>('16:9')
+  const [durationSeconds, setDurationSeconds] = useState<number>(4)
 
   const {
     generationState,
@@ -60,6 +61,7 @@ export default function App() {
       prompt,
       image: selectedFile || selectedImage || '',
       aspectRatio,
+      durationSeconds,
     })
   }
 
@@ -94,6 +96,8 @@ export default function App() {
               onModelChange={setModel}
               aspectRatio={aspectRatio}
               onAspectRatioChange={setAspectRatio}
+              durationSeconds={durationSeconds}
+              onDurationSecondsChange={setDurationSeconds}
               prompt={prompt}
               onPromptChange={setPrompt}
               isGenerating={isGenerating}
