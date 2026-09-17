@@ -1,4 +1,8 @@
-import { GoogleGenAI } from '@google/genai'
+import {
+  GenerateVideosConfig,
+  GenerateVideosParameters,
+  GoogleGenAI,
+} from '@google/genai'
 import {
   getApiKey,
   buildAuthenticatedMediaUrl,
@@ -21,16 +25,21 @@ export const AVAILABLE_MODELS = [
   'veo-3.1-fast-generate-preview',
 ] as const
 
+type VideoConfig = Pick<
+  GenerateVideosConfig,
+  | 'aspectRatio'
+  | 'durationSeconds'
+  | 'numberOfVideos'
+  | 'resolution'
+  | 'fps'
+  | 'negativePrompt'
+>
+
 export type ImageToVideoProps = {
   model: (typeof AVAILABLE_MODELS)[number]
   prompt: string
   image: string | File | Blob
-  config: {
-    durationSeconds: 4
-    resolution: '720p'
-    aspectRatio: '16:9' | '9:16'
-    numberOfVideos: 1
-  }
+  config: VideoConfig
 }
 
 export type GenerationState =
