@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { StudioCanvas } from './StudioCanvas'
+import { StudioCanvas, type StudioCanvasProps } from './StudioCanvas'
 
 describe('StudioCanvas', () => {
-  const defaultProps = {
+  const defaultProps: StudioCanvasProps = {
     generatedVideoUrl: null,
     selectedImage: null,
     aspectRatio: '16:9' as const,

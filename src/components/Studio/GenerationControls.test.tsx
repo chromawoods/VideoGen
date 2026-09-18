@@ -1,10 +1,13 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
-import { GenerationControls } from './GenerationControls'
+import {
+  GenerationControls,
+  type GenerationControlsProps,
+} from './GenerationControls'
 import { AVAILABLE_MODELS } from '../../lib/generator'
 
 describe('GenerationControls', () => {
-  const defaultProps = {
+  const defaultProps: GenerationControlsProps = {
     model: AVAILABLE_MODELS[0],
     onModelChange: vi.fn(),
     aspectRatio: '16:9' as const,

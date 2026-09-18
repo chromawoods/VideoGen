@@ -15,33 +15,32 @@ import { cn } from '../../lib/utils'
 import {
   AVAILABLE_MODELS,
   GenerationState,
+  ImageToVideoProps,
   VideoConfig,
 } from '../../lib/generator'
 
-interface GenerationControlsProps {
-  model: (typeof AVAILABLE_MODELS)[number]
-  onModelChange: (model: (typeof AVAILABLE_MODELS)[number]) => void
-  aspectRatio: '16:9' | '9:16'
-  onAspectRatioChange: (ratio: '16:9' | '9:16') => void
-  resolution: NonNullable<VideoConfig['resolution']>
-  onResolutionChange: (
-    resolution: NonNullable<VideoConfig['resolution']>
-  ) => void
-  durationSeconds: NonNullable<VideoConfig['durationSeconds']>
-  onDurationSecondsChange: (
-    duration: NonNullable<VideoConfig['durationSeconds']>
-  ) => void
-  fps: NonNullable<VideoConfig['fps']>
-  onFpsChange: (fps: NonNullable<VideoConfig['fps']>) => void
-  prompt: string
-  onPromptChange: (prompt: string) => void
-  isGenerating: boolean
-  generationState: GenerationState
-  generationStage: string
-  progress: number
-  onGenerate: () => void
-  children?: React.ReactNode
-}
+export type GenerationControlsProps = Pick<
+  VideoConfig,
+  'aspectRatio' | 'durationSeconds' | 'fps' | 'resolution'
+> &
+  Pick<ImageToVideoProps, 'model' | 'prompt'> & {
+    onModelChange: (model: ImageToVideoProps['model']) => void
+    onAspectRatioChange: (
+      ratio: NonNullable<VideoConfig['aspectRatio']>
+    ) => void
+    onResolutionChange: (res: NonNullable<VideoConfig['resolution']>) => void
+    onDurationSecondsChange: (
+      duration: NonNullable<VideoConfig['durationSeconds']>
+    ) => void
+    onFpsChange: (fps: NonNullable<VideoConfig['fps']>) => void
+    onPromptChange: (prompt: string) => void
+    isGenerating: boolean
+    generationState: GenerationState
+    generationStage: string
+    progress: number
+    onGenerate: () => void
+    children?: React.ReactNode
+  }
 
 export function GenerationControls({
   model,

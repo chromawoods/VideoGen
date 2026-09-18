@@ -23,13 +23,11 @@ export const AVAILABLE_MODELS = [
 
 export type VideoConfig = Pick<
   GenerateVideosConfig,
-  | 'aspectRatio'
-  | 'durationSeconds'
-  | 'numberOfVideos'
-  | 'resolution'
-  | 'fps'
-  | 'negativePrompt'
->
+  'durationSeconds' | 'numberOfVideos' | 'fps' | 'negativePrompt'
+> & {
+  resolution: '720p' | '1080p'
+  aspectRatio: '16:9' | '9:16'
+}
 
 export type ImageToVideoProps = {
   model: (typeof AVAILABLE_MODELS)[number]

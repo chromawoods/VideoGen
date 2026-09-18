@@ -2,21 +2,17 @@ import { useState } from 'react'
 import { Download, Film, RefreshCw, Sparkles } from 'lucide-react'
 import { cn, getErrorMessage } from '../../lib/utils'
 import { downloadVideo } from '../../lib/media'
+import type { VideoConfig, ImageToVideoProps } from '../../lib/generator'
 
-interface StudioCanvasProps {
-  generatedVideoUrl: string | null
-  selectedImage: string | null
-  aspectRatio: '16:9' | '9:16'
-  resolution: '720p' | '1080p'
-  durationSeconds: number
-  fps: number
-  model: string
-  prompt: string
-  isGenerating: boolean
-  generationStage: string
-  progress: number
-  onError?: (msg: string) => void
-}
+export type StudioCanvasProps = VideoConfig &
+  Pick<ImageToVideoProps, 'model' | 'prompt'> & {
+    generatedVideoUrl: string | null
+    selectedImage: string | null
+    isGenerating: boolean
+    generationStage: string
+    progress: number
+    onError?: (msg: string) => void
+  }
 
 export function StudioCanvas({
   generatedVideoUrl,
