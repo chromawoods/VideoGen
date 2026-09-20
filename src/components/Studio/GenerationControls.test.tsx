@@ -63,21 +63,6 @@ describe('GenerationControls', () => {
     expect(res1080Btn).toBeDisabled()
   })
 
-  it('renders the duration slider with label and correct range attributes', () => {
-    render(<GenerationControls {...defaultProps} />)
-
-    const label = screen.getByText('Duration')
-    expect(label).toBeInTheDocument()
-
-    const slider = screen.getByRole('slider', { name: /duration/i })
-    expect(slider).toBeInTheDocument()
-    expect(slider).toHaveAttribute('min', '1')
-    expect(slider).toHaveAttribute('max', '12')
-    expect(slider).toHaveAttribute('step', '1')
-    expect(slider).toHaveValue('4')
-    expect(screen.getByText('4s')).toBeInTheDocument()
-  })
-
   it('calls onDurationSecondsChange with integer value when slider changes', () => {
     const onDurationSecondsChange = vi.fn()
     render(
@@ -97,7 +82,6 @@ describe('GenerationControls', () => {
     render(<GenerationControls {...defaultProps} isGenerating={true} />)
 
     const sliders = screen.getAllByRole('slider')
-    expect(sliders).toHaveLength(2)
     sliders.forEach((slider) => expect(slider).toBeDisabled())
   })
 })

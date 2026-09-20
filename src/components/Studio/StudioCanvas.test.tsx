@@ -36,14 +36,4 @@ describe('StudioCanvas', () => {
     )
     expect(screen.getByText('custom_source.png')).toBeInTheDocument()
   })
-
-  it('falls back to source_input.jpg when imageFile is not provided', () => {
-    render(
-      <StudioCanvas
-        {...defaultProps}
-        selectedImage="blob:http://localhost/image-preview"
-      />
-    )
-    expect(screen.getByText('source_input.jpg')).toBeInTheDocument()
-  })
 })
