@@ -21,6 +21,9 @@ export function Header() {
             </div>
           </div>
         </div>
+        <span className="text-xs text-slate-500">
+          A custom UI for Google's Veo API.
+        </span>
       </div>
     </header>
   )

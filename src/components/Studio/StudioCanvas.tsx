@@ -3,11 +3,14 @@ import { Download, Film, RefreshCw, Sparkles } from 'lucide-react'
 import { cn, getErrorMessage } from '../../lib/utils'
 import { downloadVideo } from '../../lib/media'
 import type { VideoConfig, ImageToVideoProps } from '../../lib/generator'
+import type { ImageFileInfo } from '../../hooks/useImageUpload'
+import { VideoTags } from './VideoTags'
 
 export type StudioCanvasProps = VideoConfig &
   Pick<ImageToVideoProps, 'model' | 'prompt'> & {
     generatedVideoUrl: string | null
     selectedImage: string | null
+    imageFile?: ImageFileInfo | null
     isGenerating: boolean
     generationStage: string
     progress: number
@@ -17,11 +20,11 @@ export type StudioCanvasProps = VideoConfig &
 export function StudioCanvas({
   generatedVideoUrl,
   selectedImage,
+  imageFile,
   aspectRatio,
   resolution,
   durationSeconds,
   model,
-  prompt,
   isGenerating,
   generationStage,
   progress,
@@ -56,16 +59,16 @@ export function StudioCanvas({
         <div className="flex items-center space-x-2 font-mono text-[11px] text-slate-400">
           <span className="ml-2 font-mono text-slate-400">
             {generatedVideoUrl
-              ? 'veo_output.mp4'
+              ? generatedVideoUrl.split('/').pop()
               : selectedImage
-                ? 'source_input.jpg'
-                : 'studio_preview.mp4'}
+                ? imageFile?.name || ''
+                : ''}
           </span>
         </div>
       </div>
 
       {/* Dynamic Viewport */}
-      <div className="relative bg-studio-abyss flex items-center justify-center p-6 min-h-[420px] overflow-hidden">
+      <div className="relative bg-studio-abyss flex flex-col items-center justify-center p-6 min-h-[420px] overflow-hidden">
         {generatedVideoUrl ? (
           /* Generated Video Output */
           <div
@@ -82,21 +85,6 @@ export function StudioCanvas({
               loop
               className="w-full h-full object-contain"
             />
-            <div className="absolute top-3 right-3 flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <button
-                type="button"
-                onClick={handleDownloadVideo}
-                disabled={isDownloading}
-                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-purple-600/90 hover:bg-purple-600 text-white text-xs font-medium shadow-lg backdrop-blur-md transition-all disabled:opacity-60 cursor-pointer"
-              >
-                {isDownloading ? (
-                  <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                ) : (
-                  <Download className="w-3.5 h-3.5" />
-                )}
-                <span>{isDownloading ? 'Saving...' : 'Download'}</span>
-              </button>
-            </div>
           </div>
         ) : selectedImage ? (
           /* Uploaded Image Keyframe Preview */
@@ -146,14 +134,12 @@ export function StudioCanvas({
                   </span>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-xs text-slate-200 line-clamp-1 italic">
-                    {prompt
-                      ? `"${prompt}"`
-                      : 'Enter motion prompt and click generate to synthesize video'}
-                  </p>
-                  <p className="text-[10px] text-slate-400 font-mono">
-                    Ratio: {aspectRatio} • {durationSeconds} Seconds
-                  </p>
+                  <VideoTags
+                    model={model}
+                    resolution={resolution}
+                    durationSeconds={durationSeconds}
+                    aspectRatio={aspectRatio}
+                  />
                 </div>
               </div>
             )}
@@ -183,24 +169,29 @@ export function StudioCanvas({
                 </p>
               </div>
 
-              <div className="flex flex-wrap justify-center items-center gap-2 pt-2 text-[11px] font-mono text-slate-400">
-                <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
-                  Model: {model}
-                </span>
-              </div>
-              <div className="flex flex-wrap justify-center items-center gap-2 pt-2 text-[11px] font-mono text-slate-400">
-                <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
-                  Ratio: {aspectRatio}
-                </span>
-                <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
-                  Resolution: {resolution}
-                </span>
-                <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
-                  Duration: {durationSeconds}s
-                </span>
-              </div>
+              <VideoTags
+                model={model}
+                resolution={resolution}
+                durationSeconds={durationSeconds}
+                aspectRatio={aspectRatio}
+              />
             </div>
           </div>
+        )}
+        {generatedVideoUrl && (
+          <button
+            type="button"
+            onClick={handleDownloadVideo}
+            disabled={isDownloading}
+            className="flex items-center space-x-1.5 mt-3 self-end px-3 py-1.5 rounded-lg bg-purple-600/90 hover:bg-purple-600 text-white text-xs font-medium shadow-lg backdrop-blur-md transition-all disabled:opacity-60 cursor-pointer"
+          >
+            {isDownloading ? (
+              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+            ) : (
+              <Download className="w-3.5 h-3.5" />
+            )}
+            <span>{isDownloading ? 'Saving...' : 'Download'}</span>
+          </button>
         )}
       </div>
     </div>

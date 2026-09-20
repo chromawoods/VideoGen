@@ -130,6 +130,7 @@ export default function App() {
             <StudioCanvas
               generatedVideoUrl={generatedVideoUrl}
               selectedImage={selectedImage}
+              imageFile={imageFile}
               aspectRatio={aspectRatio}
               resolution={resolution}
               durationSeconds={durationSeconds}
