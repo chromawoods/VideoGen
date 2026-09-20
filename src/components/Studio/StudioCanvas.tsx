@@ -20,7 +20,6 @@ export function StudioCanvas({
   aspectRatio,
   resolution,
   durationSeconds,
-  fps,
   model,
   prompt,
   isGenerating,
@@ -153,7 +152,7 @@ export function StudioCanvas({
                       : 'Enter motion prompt and click generate to synthesize video'}
                   </p>
                   <p className="text-[10px] text-slate-400 font-mono">
-                    Ratio: {aspectRatio} • {durationSeconds} Seconds • {fps} FPS
+                    Ratio: {aspectRatio} • {durationSeconds} Seconds
                   </p>
                 </div>
               </div>
@@ -198,9 +197,6 @@ export function StudioCanvas({
                 </span>
                 <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
                   Duration: {durationSeconds}s
-                </span>
-                <span className="px-2 py-0.5 rounded bg-white/10 text-slate-200">
-                  FPS: {fps}
                 </span>
               </div>
             </div>

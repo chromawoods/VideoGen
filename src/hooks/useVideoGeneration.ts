@@ -16,7 +16,6 @@ export interface GenerateVideoParams {
   aspectRatio: '16:9' | '9:16'
   resolution?: '720p' | '1080p'
   durationSeconds?: VideoConfig['durationSeconds']
-  fps?: VideoConfig['fps']
 }
 
 export function useVideoGeneration() {
@@ -51,7 +50,6 @@ export function useVideoGeneration() {
     aspectRatio,
     resolution = '720p',
     durationSeconds = 4,
-    fps = 24,
   }: GenerateVideoParams): Promise<boolean> => {
     if (isGenerating) return false
     setErrorMessage(null)
@@ -91,7 +89,6 @@ export function useVideoGeneration() {
         image,
         config: {
           durationSeconds,
-          fps,
           resolution,
           aspectRatio,
           numberOfVideos: 1,

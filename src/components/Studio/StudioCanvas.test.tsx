@@ -9,7 +9,6 @@ describe('StudioCanvas', () => {
     aspectRatio: '16:9' as const,
     resolution: '720p',
     durationSeconds: 4,
-    fps: 24,
     model: 'veo-3.1-lite-generate-preview',
     prompt: '',
     isGenerating: false,

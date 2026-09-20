@@ -23,7 +23,7 @@ export const AVAILABLE_MODELS = [
 
 export type VideoConfig = Pick<
   GenerateVideosConfig,
-  'durationSeconds' | 'numberOfVideos' | 'fps' | 'negativePrompt'
+  'durationSeconds' | 'numberOfVideos' | 'negativePrompt'
 > & {
   resolution: '720p' | '1080p'
   aspectRatio: '16:9' | '9:16'

@@ -18,7 +18,6 @@ export default function App() {
   const [resolution, setResolution] =
     useState<NonNullable<VideoConfig['resolution']>>('720p')
   const [durationSeconds, setDurationSeconds] = useState<number>(4)
-  const [fps, setFps] = useState<number>(24)
 
   const {
     generationState,
@@ -65,7 +64,6 @@ export default function App() {
       aspectRatio,
       resolution,
       durationSeconds,
-      fps,
     })
   }
 
@@ -104,8 +102,6 @@ export default function App() {
               onResolutionChange={setResolution}
               durationSeconds={durationSeconds}
               onDurationSecondsChange={setDurationSeconds}
-              fps={fps}
-              onFpsChange={setFps}
               prompt={prompt}
               onPromptChange={setPrompt}
               isGenerating={isGenerating}
@@ -137,7 +133,6 @@ export default function App() {
               aspectRatio={aspectRatio}
               resolution={resolution}
               durationSeconds={durationSeconds}
-              fps={fps}
               model={model}
               prompt={prompt}
               isGenerating={isGenerating}

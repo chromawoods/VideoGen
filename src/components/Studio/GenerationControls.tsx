@@ -5,7 +5,6 @@ import {
   RefreshCw,
   CheckCircle2,
   Clock,
-  Gauge,
   SlidersHorizontal,
   Proportions,
   Tv,
@@ -21,7 +20,7 @@ import {
 
 export type GenerationControlsProps = Pick<
   VideoConfig,
-  'aspectRatio' | 'durationSeconds' | 'fps' | 'resolution'
+  'aspectRatio' | 'durationSeconds' | 'resolution'
 > &
   Pick<ImageToVideoProps, 'model' | 'prompt'> & {
     onModelChange: (model: ImageToVideoProps['model']) => void
@@ -32,7 +31,6 @@ export type GenerationControlsProps = Pick<
     onDurationSecondsChange: (
       duration: NonNullable<VideoConfig['durationSeconds']>
     ) => void
-    onFpsChange: (fps: NonNullable<VideoConfig['fps']>) => void
     onPromptChange: (prompt: string) => void
     isGenerating: boolean
     generationState: GenerationState
@@ -51,8 +49,6 @@ export function GenerationControls({
   onResolutionChange,
   durationSeconds,
   onDurationSecondsChange,
-  fps,
-  onFpsChange,
   prompt,
   onPromptChange,
   isGenerating,
@@ -171,8 +167,8 @@ export function GenerationControls({
         <input
           id="duration-seconds"
           type="range"
-          min={1}
-          max={12}
+          min={4}
+          max={8}
           step={1}
           value={durationSeconds}
           onChange={(e) =>
@@ -183,45 +179,9 @@ export function GenerationControls({
           className="w-full h-1.5 bg-studio-input rounded-lg appearance-none cursor-pointer accent-purple-500 disabled:opacity-50"
         />
         <div className="flex justify-between text-[10px] text-slate-500 font-mono">
-          <span>1s</span>
+          <span>4s</span>
           <span>6s</span>
-          <span>12s</span>
-        </div>
-      </div>
-
-      {/* Frame Rate (FPS) Slider */}
-      <div className="space-y-1.5">
-        <div className="flex items-center justify-between">
-          <label
-            htmlFor="fps"
-            className="text-xs font-medium text-slate-400 flex items-center space-x-1"
-          >
-            <Gauge className="w-3.5 h-3.5 text-slate-400" />
-            <span>Frame Rate</span>
-            <span className="text-[10px] text-slate-500 font-normal">
-              (FPS)
-            </span>
-          </label>
-          <span className="text-xs font-mono font-medium text-purple-300">
-            {fps} FPS
-          </span>
-        </div>
-        <input
-          id="fps"
-          type="range"
-          min={1}
-          max={60}
-          step={1}
-          value={fps}
-          onChange={(e) => onFpsChange(parseInt(e.target.value, 10))}
-          disabled={isGenerating}
-          aria-label="Frame Rate (FPS)"
-          className="w-full h-1.5 bg-studio-input rounded-lg appearance-none cursor-pointer accent-purple-500 disabled:opacity-50"
-        />
-        <div className="flex justify-between text-[10px] text-slate-500 font-mono">
-          <span>1 FPS</span>
-          <span>30 FPS</span>
-          <span>60 FPS</span>
+          <span>8s</span>
         </div>
       </div>
 
